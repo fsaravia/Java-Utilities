@@ -31,7 +31,7 @@ public class GUICommons {
             Class[] parTypes = new Class[argList.length];
             for (int i = 0; i < argList.length; i++) {
                 if (argList[i] == null) {
-                    throw new IllegalArgumentException("Se intentÃ³ crear una clase haciendo reflexiÃ³n con componentes nulos");
+                    throw new IllegalArgumentException("Trying to create a new class using reflection and providing a null argList");
                 }
                 parTypes[i] = argList[i].getClass();
             }
