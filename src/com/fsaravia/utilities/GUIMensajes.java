@@ -67,7 +67,11 @@ public class GUIMensajes extends JOptionPane {
                 report.setVisible(true);
             }
         } else {
-            mostrarError(padre, error);
+            if (error instanceof ValidationException) {
+                mostrarMensaje(padre, error.getLocalizedMessage());
+            } else {
+                mostrarError(padre, error);
+            }
         }
     }
 
