@@ -49,28 +49,31 @@ public class GUIMensajes extends JOptionPane {
 //        }
 //    }
 
-    public static void mostrarErrorReportar(Component padre, Throwable error) {
-        boolean enviar = true;
+    public static void mostrarErrorReportar(Component parent, Throwable error) {
+        boolean sendMailReport = true;
         if (error instanceof ValidationException) {
-            enviar = false;
+            sendMailReport = false;
         }
         if (error.getCause() != null && error.getCause() instanceof ValidationException) {
-            enviar = false;
+            sendMailReport = false;
         }
-        if (enviar) {
-            Logger.getLogger(padre.getClass().getName()).log(Level.SEVERE, null, error);
-            int op = showConfirmDialog(padre, error.getLocalizedMessage() + "\n\n¿Desea reportar este error?", "Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
+        if (sendMailReport) {
+            Logger.getLogger(parent.getClass().getName()).log(Level.SEVERE, null, error);
+            int op = showConfirmDialog(parent, error.getLocalizedMessage() + "\n\n¿Desea reportar este error?", "Error", JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE);
             if (op == JOptionPane.YES_OPTION) {
-                //padre
                 ReportarErrores report = new ReportarErrores(null, error);
-                report.setLocationRelativeTo(padre);
+                report.setLocationRelativeTo(parent);
                 report.setVisible(true);
             }
         } else {
             if (error instanceof ValidationException) {
-                mostrarMensaje(padre, error.getLocalizedMessage());
+                mostrarMensaje(parent, error.getLocalizedMessage());
             } else {
-                mostrarError(padre, error);
+                if (error.getCause() != null && error.getCause() instanceof ValidationException) {
+                    mostrarMensaje(parent, error.getCause().getLocalizedMessage());
+                } else {
+                    mostrarError(parent, error);
+                }
             }
         }
     }
