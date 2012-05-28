@@ -7,7 +7,7 @@
  * una cadena con el número como texto.
  *
  * Ejemplo:
- * System.out.println(NumLetrasJ.Convierte("12312343",NumLetrasJ.Tipo.Pronombre));
+ * .println(NumLetrasJ.Convierte("12312343",NumLetrasJ.Tipo.Pronombre));
  *
  * Puedes usar, modificar y distribuir libremente éste código, teniendo en cuenta
  * que se distribuye "tal cual", sin garantía ni responsabilidad de ningún tipo.
