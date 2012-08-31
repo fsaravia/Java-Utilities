@@ -5,49 +5,14 @@
 package com.fsaravia.utilities;
 
 import com.ib.HBCore.exceptions.ValidationException;
-import java.awt.event.FocusEvent;
-import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import javax.swing.text.JTextComponent;
 
 /**
  *
  * @author Federico Saravia
  */
 public final class Miscelaneos {
-
-    public static void seleccionarCampo(FocusEvent evt) {
-        if (evt.getID() == FocusEvent.FOCUS_GAINED) {
-            ((JTextComponent) evt.getSource()).selectAll();
-        }
-    }
-
-    public static void transferFocus(KeyEvent evt) {
-        if (evt.getKeyCode() == KeyEvent.VK_TAB) {
-            if (evt.getModifiers() > 0) {
-                evt.getComponent().transferFocusBackward();
-            } else {
-                evt.getComponent().transferFocus();
-            }
-            evt.consume();
-        }
-    }
-
-    public static double calcularPrecio(double precioSugerido, double descuento) {
-        double precioReal = precioSugerido - ((descuento * precioSugerido) / 100);
-        return redondear(precioReal, 2);
-    }
-
-    public static double calcularDescuento(double precioSugerido, double precioReal) {
-        double descuento = 100 - ((precioReal * 100) / precioSugerido);
-        return redondear(descuento, 2);
-    }
-
-    public static double redondear(double numero, int decimales) {
-        return Math.round(numero * Math.pow(10, decimales)) / Math.pow(10, decimales);
-
-    }
 
     public static Calendar setCalendario(Object horario) throws Exception {
         Calendar cal = new GregorianCalendar();
@@ -112,93 +77,6 @@ public final class Miscelaneos {
         }
     }
 
-    public static void setCalendario2(Calendar cal, Object horario) throws Exception {
-        int dosPuntos;
-        int horas;
-        int minutos;
-        if (cal == null) {
-            throw new ValidationException("Ingrese la fecha correctamente (dd/mm/aaaa");
-        }
-        try {
-            String hora = String.valueOf(horario);
-            dosPuntos = hora.indexOf(":");
-            horas = Integer.parseInt(hora.substring(0, dosPuntos));
-            minutos = Integer.parseInt(hora.substring(dosPuntos + 1));
-            if (horas >= 0 && horas < 24 && minutos >= 0 && minutos < 60) {
-                cal.set(GregorianCalendar.HOUR_OF_DAY, horas);
-                cal.set(GregorianCalendar.MINUTE, minutos);
-                cal.set(GregorianCalendar.SECOND, 0);
-                cal.set(GregorianCalendar.MILLISECOND, 0);
-                cal.set(GregorianCalendar.DST_OFFSET, 0);
-            } else {
-                throw new Exception("Ingrese una hora valida en el formato de 24 hs");
-            }
-        } catch (NumberFormatException nfe) {
-            throw new ValidationException("Ingrese la hora correctamente (hh:mm)");
-        } catch (NullPointerException npe) {
-            throw new ValidationException("Ingrese la hora correctamente (hh:mm)");
-        } catch (StringIndexOutOfBoundsException sbe) {
-            throw new ValidationException("Ingrese la hora correctamente (hh:mm)");
-        }
-    }
-
-//    public static String calendarToString(Calendar cal) {
-//        StringBuilder calendario = new StringBuilder(cal.get(Calendar.DATE) + "/"
-//                + (cal.get(Calendar.MONTH) + 1) + "/"
-//                + cal.get(Calendar.YEAR) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":"
-//                + cal.get(Calendar.MINUTE));
-//        if (cal.get(Calendar.MINUTE) < 10) {
-//            calendario.insert(calendario.length() - 1, "0");
-//        }
-//        return calendario.toString();
-//    }
-
-//    public static String calendarToStringCompleto(Calendar cal) {
-//        String dia = "";
-//        switch (cal.get(Calendar.DAY_OF_WEEK)) {
-//            case Calendar.SUNDAY:
-//                dia = "Domingo";
-//                break;
-//            case Calendar.MONDAY:
-//                dia = "Lunes";
-//                break;
-//            case Calendar.TUESDAY:
-//                dia = "Martes";
-//                break;
-//            case Calendar.WEDNESDAY:
-//                dia = "Miércoles";
-//                break;
-//            case Calendar.THURSDAY:
-//                dia = "Jueves";
-//                break;
-//            case Calendar.FRIDAY:
-//                dia = "Viernes";
-//                break;
-//            case Calendar.SATURDAY:
-//                dia = "Sábado";
-//                break;
-//
-//        }
-//        StringBuilder calendario = new StringBuilder(dia + " " + cal.get(Calendar.DATE) + "/"
-//                + (cal.get(Calendar.MONTH) + 1) + "/"
-//                + cal.get(Calendar.YEAR) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":"
-//                + cal.get(Calendar.MINUTE) + ":"
-//                + cal.get(Calendar.SECOND));
-//        if (cal.get(Calendar.MINUTE) < 10) {
-//            calendario.insert(calendario.length() - 1, "0");
-//        }
-//        return calendario.toString();
-//    }
-
-//    public static String horaToString(Calendar cal) {
-//        StringBuilder calendario = new StringBuilder(cal.get(Calendar.HOUR_OF_DAY) + ":"
-//                + cal.get(Calendar.MINUTE));
-//        if (cal.get(Calendar.MINUTE) < 10) {
-//            calendario.insert(calendario.length() - 1, "0");
-//        }
-//        return calendario.toString();
-//    }
-
     public static Object calendarToFormattedTextField(Calendar cal) {
         StringBuffer horas = new StringBuffer(cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE));
         if (cal.get(Calendar.HOUR_OF_DAY) < 10) {
@@ -245,7 +123,7 @@ public final class Miscelaneos {
     }
 
     /**
-     * 
+     *
      * @param before
      * @param after
      * @return dias,horas, DESCOMPONER EL VALOR!!

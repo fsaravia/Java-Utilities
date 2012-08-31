@@ -11,6 +11,9 @@ package com.fsaravia.utilities;
 public class DocumentosUtil {
 
     public static String removerGuiones(String numeroDocumento) {
+        if(numeroDocumento == null){
+            numeroDocumento = "";
+        }
         int index = numeroDocumento.indexOf("-");
         while (index > -1) {
             String nuevoNro = numeroDocumento.substring(0, index);
