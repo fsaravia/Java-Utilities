@@ -14,6 +14,14 @@ import java.util.GregorianCalendar;
  */
 public final class Miscelaneos {
 
+    public static String addZeroesBefore(long number, int desiredLength) {
+        String stringNumber = String.valueOf(number);
+        for (int i = desiredLength - stringNumber.length(); i > 0; i--) {
+            stringNumber = "0" + stringNumber;
+        }
+        return stringNumber;
+    }
+
     public static Calendar setCalendario(Object horario) throws Exception {
         Calendar cal = new GregorianCalendar();
         int dosPuntos;
