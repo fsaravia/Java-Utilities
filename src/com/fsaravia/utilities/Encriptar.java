@@ -11,6 +11,8 @@ import java.security.spec.AlgorithmParameterSpec;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.SecretKey;
@@ -28,19 +30,14 @@ public class Encriptar {
             throw new IllegalStateException(e.getMessage());
         }
 
-//		try {
         md.update(textoplano.getBytes()); // Generación de resumen de mensaje
-//		} catch(UnsupportedEncodingException e) {
-//			throw new IllegalStateException(e.getMessage());
-//		}
         byte[] raw = md.digest(); // Obtención del resumen de mensaje
         String hash = Encriptar.getString(raw);
-//		String hash = (new BASE64Encoder()).encode(raw); // Traducción a BASE64
         return hash;
     }
 
     private static String getString(byte[] bytes) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         for (int i = 0; i < bytes.length; i++) {
             byte b = bytes[i];
             sb.append((int) ( 0x00FF & b ));
@@ -82,16 +79,8 @@ public class Encriptar {
             // Crear los ciphers
             ecipher.init(Cipher.ENCRYPT_MODE, key, paramSpec);
             dcipher.init(Cipher.DECRYPT_MODE, key, paramSpec);
-        } catch (javax.crypto.NoSuchPaddingException e) {
-            e.printStackTrace();
-        } catch (java.security.NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (java.security.InvalidKeyException e) {
-            e.printStackTrace();
-        } catch (InvalidKeySpecException e) {
-            e.printStackTrace();
-        } catch (InvalidAlgorithmParameterException e) {
-            e.printStackTrace();
+        } catch (javax.crypto.NoSuchPaddingException | java.security.NoSuchAlgorithmException | java.security.InvalidKeyException | InvalidKeySpecException | InvalidAlgorithmParameterException e) {
+            Logger.getLogger(Encriptar.class.getName()).log(Level.SEVERE, null, e);
         }
 
         try {
@@ -104,9 +93,7 @@ public class Encriptar {
             // Encodear bytes a base64 para obtener cadena
 //            return new sun.misc.BASE64Encoder().encode(enc);
             return getString(enc);
-        } catch (javax.crypto.BadPaddingException e) {
-        } catch (IllegalBlockSizeException e) {
-        } catch (UnsupportedEncodingException e) {
+        } catch (javax.crypto.BadPaddingException | IllegalBlockSizeException | UnsupportedEncodingException e) {
         }
 
         return null;
