@@ -4,7 +4,7 @@
  */
 package com.fsaravia.utilities;
 
-import com.ib.HBCore.exceptions.ValidationException;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -76,12 +76,8 @@ public final class Miscelaneos {
             } else {
                 throw new Exception("Ingrese una hora valida en el formato de 24 hs");
             }
-        } catch (NumberFormatException nfe) {
-            throw new ValidationException("Ingrese la hora correctamente (hh:mm)");
-        } catch (NullPointerException npe) {
-            throw new ValidationException("Ingrese la hora correctamente (hh:mm)");
-        } catch (StringIndexOutOfBoundsException sbe) {
-            throw new ValidationException("Ingrese la hora correctamente (hh:mm)");
+        } catch (NumberFormatException | NullPointerException | StringIndexOutOfBoundsException nfe) {
+            throw new Exception("Ingrese la hora correctamente (hh:mm)");
         }
     }
 
